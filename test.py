@@ -2,26 +2,32 @@
 import BeautifulSoup 
 import requests
 from BeautifulSoup import BeautifulSoup
+import urllib2
+import os
+import re
 
-url = 'http://tieba.baidu.com/f?kw=2011superfive&fr=index&ie=utf-8'
+url = 'http://www.douban.com/group/topic/37742019/'
 
 pageSource = requests.get(url)
 
 page = []
-page = pageSource.text
-page.split(',')
+page = urllib2.urlopen(url)
+#page.split(',')
 #print page
 
-doc = ['<html><head><title>PythonClub.org</title></head>',
-       '<body><p id="firstpara" align="center">This is paragraph <b>one</b> of ptyhonclub.org.',
-       '<p id="secondpara" align="blah">This is paragraph <b>two</b> of pythonclub.org.',
-       '</html>']
-soup = BeautifulSoup(''.join(page))
-print soup.html.head.title
+
+soup = BeautifulSoup(page)
+barname = []
+barname = soup.html.title.string
+barname = re.sub(r'(\t|\s|\n|\r\n)', '', title)
+ 
+print title
+
+urllist = re.findall('\<a href\=\"(/.*)" title', page)
+
 hrefs = []
 results = soup.findAll('a', href = True)
 for a in results:
 	href = a.get('href').encode('utf-8')
 	hrefs.append(href)
 
-print hrefs
