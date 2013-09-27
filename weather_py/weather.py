@@ -28,3 +28,6 @@ def weather():
 				print('没有找到该城市')
 		else:
 			exit = True
+
+
+weather()
