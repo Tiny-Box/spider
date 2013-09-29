@@ -88,6 +88,10 @@ class LoginRenren(object):
                 
     def __getStatus(self):
         pass
+
+	def friends_get(self):
+		myPage = urllib2.urlopen(self.url).read().decode("gbk")
+		print myPage
                 
 if __name__ == '__main__':
                     
@@ -98,4 +102,4 @@ if __name__ == '__main__':
                         
     lr = LoginRenren(EMAIL, PASSWORD)
     lr.login()
-
+    lr.friends_get()
