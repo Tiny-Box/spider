@@ -18,31 +18,30 @@ postdata = {'Login.Token1':username, 'Login.Token2':password}
 
 login_url = 'http://tjis2.tongji.edu.cn:58080/amserver/UI/Login'
 enter_url = 'http://4m3.tongji.edu.cn/eams/tJStdElectCourse!defaultPage.action?electionProfile.id=1985'
-class_url = 'http://4m3.tongji.edu.cn/eams/tJStdElectCourse!batchOperator.action?electLessonIds=111111111823226%2C&withdrawLessonIds=&exchangeLessonPairs=&_=1420557098832'
+class_url = 'http://4m3.tongji.edu.cn/eams/tJStdElectCourse!batchOperator.action?electLessonIds=111111111823226%2C&withdrawLessonIds=&exchangeLessonPairs=&_=1420617992659'
 
-# url = login_url + '&'
-Data = ''
-for (k,v) in  postdata.items():
-        Data += '&' + k + '=' + v
+
+Data = urllib.urlencode(postdata);
 
 res = ur.urlopen(login_url, data=Data)
 # print res.read()
 
 res = ur.urlopen(enter_url, data=Data)
-# info = ur.urlopen(enter_url, data=Data).info()
-# print res.read().decode(info.getparam('charset')).encode('gbk')
+#info = ur.urlopen(enter_url, data=Data).info()
+#print res.read().decode(info.getparam('charset')).encode('gbk')
 
 cnt = 0
 
-while (1):
-	res = ur.urlopen(class_url)
-	tmp = res.read().decode('utf-8')
-	print tmp
-	str = "elected : true"
-	pos = tmp.find(str.decode('utf-8'))
-	if (pos == -1):
-		break;
-	cnt += 1
-	print "失败, ", cnt
+
+while (cnt < 50):
+    res = ur.urlopen(class_url)
+    tmp = res.read().decode('utf-8')
+
+    str = "elected : true"
+    pos = tmp.find(str.decode('utf-8'))
+    if (pos != -1):
+    	break;
+    cnt += 1
+    print "失败, ", cnt
 
 print "成功, ", cnt
